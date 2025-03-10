@@ -12,7 +12,9 @@ public class Test_DB {
         }else {
             System.out.println("Insert failed");
         }
-        em.getStudent("SELECT * FROM ETUDIANT");
+        //em.fetchStudents("SELECT * FROM ETUDIANT");
+        ResultSet rs = em.getStudents("SELECT * FROM Etudiant");
+        em.fetchStudents(rs);
     }
 }
 

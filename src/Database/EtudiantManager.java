@@ -39,9 +39,8 @@ public class EtudiantManager {
         return rowsAffected;
     }
 
-    public void getStudent(String query) {
+    public void fetchStudents(ResultSet rs) {
         try {
-            ResultSet rs = st.executeQuery(query);
             ResultSetMetaData rsmd = rs.getMetaData();
             int columnCount = rsmd.getColumnCount();
 
@@ -61,5 +60,16 @@ public class EtudiantManager {
         } catch (SQLException e) {
             System.out.println("Query failed: " + e.getMessage());
         }
+    }
+
+    public ResultSet getStudents(String query) {
+        try {
+            ResultSet rs = st.executeQuery(query);
+            ResultSetMetaData rsmd = rs.getMetaData();
+            return rs;
+        }catch (SQLException e) {
+            System.out.println("Query failed: " + e.getMessage());
+        }
+        return null;
     }
 }
