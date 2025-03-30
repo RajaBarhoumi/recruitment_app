@@ -62,18 +62,20 @@ public class GestionEtudiant extends JFrame {
         String req = "SELECT * FROM Etudiant";
         rs = manager.getStudents(req);
 
-        model = new MyTableModel();
+        model = new MyTableModel(rs,manager);
 
         jt = new JTable(model);
         //jt.setModel(model);
         this.add(new JScrollPane(jt), BorderLayout.CENTER);
+        jt.setModel(model);
+
 
 
     }
 
     public static void main(String[] args) {
-        GestionEtudiant gp = new GestionEtudiant();
-        gp.setVisible(true);
+        GestionEtudiant ge = new GestionEtudiant();
+        ge.setVisible(true);
 
     }
 }
