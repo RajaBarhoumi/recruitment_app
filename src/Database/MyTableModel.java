@@ -67,12 +67,45 @@ public class MyTableModel extends AbstractTableModel {
             return false;
         }   }
 
+    private int getColumnIndexByName(String columnName) {
+        try {
+            for (int i = 1; i <= rsmd.getColumnCount(); i++) {
+                if (rsmd.getColumnName(i).equalsIgnoreCase(columnName)) {
+                    return i - 1;
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return -1;
+    }
+
+
     @Override
     public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
-        data.get(rowIndex)[columnIndex]=aValue;
+        int cinIndex = getColumnIndexByName("cin");
+        if (getColumnName(columnIndex).equalsIgnoreCase("moyenne")) {
+            try {
+                int cin = (int) data.get(rowIndex)[cinIndex];
+                double nouvelleMoyenne = Double.parseDouble(aValue.toString());
+
+                int result = em.updateMoyenne(cin, nouvelleMoyenne);
+                if (result > 0) {
+                    data.get(rowIndex)[columnIndex] = nouvelleMoyenne;
+                    fireTableCellUpdated(rowIndex, columnIndex);
+                    System.out.println("Moyenne updated in UI and DB for CIN: " + cin);
+                } else {
+                    System.out.println("Failed to update moyenne for CIN: " + cin);
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid moyenne input: " + aValue);
+            }
+        }
     }
+
+
     //inserer les donnees ds la base si 1 ajouter les donnees en data
-    public int ajouterEtudiant(int cin,String nom, String prenom,double moyenne) {
+    public int addStudent(int cin,String nom, String prenom,double moyenne) {
         int a=em.insertStudent(cin,nom,prenom,moyenne);
         if(a>0){
             data.add(new Object[]{cin,nom,prenom,moyenne});
@@ -82,9 +115,13 @@ public class MyTableModel extends AbstractTableModel {
         }
         return a;
     }
-    public int supprimerEtudiant(int cin) {
-        int a=0;
-        return a;
+    public int deleteStudent(int cin) {
+        int result = em.deleteStudent(cin);
+        if (result > 0) {
+            data.removeIf(row -> (int) row[0] == cin);
+            fireTableDataChanged();
+        }
+        return result;
     }
 
 }

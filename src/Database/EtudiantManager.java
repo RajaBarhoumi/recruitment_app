@@ -72,4 +72,28 @@ public class EtudiantManager {
         }
         return null;
     }
+
+    public int deleteStudent(int cin) {
+        int rowsAffected = 0;
+        try {
+            String query = "DELETE FROM etudiant WHERE cin = " + cin;
+            rowsAffected = st.executeUpdate(query);
+            System.out.println("Student with CIN " + cin + " deleted successfully.");
+        } catch (SQLException e) {
+            System.out.println("Delete failed: " + e.getMessage());
+        }
+        return rowsAffected;
+    }
+
+    public int updateMoyenne(int cin, double nouvelleMoyenne) {
+        int rowsAffected = 0;
+        try {
+            String query = "UPDATE etudiant SET moyenne = " + nouvelleMoyenne + " WHERE cin = " + cin;
+            rowsAffected = st.executeUpdate(query);
+            System.out.println("Moyenne updated successfully for CIN " + cin);
+        } catch (SQLException e) {
+            System.out.println("Update failed: " + e.getMessage());
+        }
+        return rowsAffected;
+    }
 }

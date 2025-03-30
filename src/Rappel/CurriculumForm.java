@@ -109,7 +109,7 @@ public class CurriculumForm extends JInternalFrame {
     private JSpinner spDateNaissance;
 
     public CurriculumForm() {
-        setTitle("Création de CV");
+        super("Création de CV", true, true, true, true);
         setSize(500, 500);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setClosable(true);

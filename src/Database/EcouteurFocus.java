@@ -1,15 +1,15 @@
-package Rappel;
+package Database;
 
-import java.awt.*;
+
+import javax.swing.*;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
-import javax.swing.JTextField;
 
 public class EcouteurFocus implements FocusListener {
-    private GestionProfil gestionProfil;
+    private GestionEtudiant gestionEtudiant;
 
-    public EcouteurFocus(GestionProfil gestionProfil) {
-        this.gestionProfil = gestionProfil;
+    public EcouteurFocus(GestionEtudiant gestionEtudiant) {
+        this.gestionEtudiant = gestionEtudiant;
     }
 
     @Override
@@ -30,12 +30,14 @@ public class EcouteurFocus implements FocusListener {
     }
 
     private String getPlaceholderText(JTextField tf) {
-        if (tf == gestionProfil.tf_first_name) {
+        if (tf == gestionEtudiant.tf_first_name) {
             return "Entrer votre nom";
-        } else if (tf == gestionProfil.tf_last_name) {
+        } else if (tf == gestionEtudiant.tf_last_name) {
             return "Entrer votre prenom";
-        } else if (tf == gestionProfil.tf_nickname) {
-            return "Entrer votre pseudo";
+        } else if (tf == gestionEtudiant.tf_cin) {
+            return "Entrer votre CIN";
+        } else if (tf == gestionEtudiant.tf_moyenne) {
+            return "Entrer votre moyenne";
         }
         return "";
     }
